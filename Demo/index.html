@@ -12,14 +12,19 @@
   <!-- Adding in firebase.js -->
   <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
   <!-- add in our javascript files -->
-  <script src="./assets/js/script.js"></script>
+  <script src="/js/script.js"></script>
 </head>
 
 <body>
   <div class="container">
     <div class="row">
+      <div class="col-12 text-center">
+        <h1>Firebase Demo</h1>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-6">
-        <h1>Login With Google</h1>
+        <h3>Login With Google</h3>
         <button id="googleLogin" type="button" name="button">Login</button>
         <button id="googleLogout" type="button" name="button" style='display: none'>Logout</button>
         <div class="welcome">
@@ -27,7 +32,7 @@
         </div>
       </div>
       <div class="col-6">
-        <h1>Current User</h1>
+        <h3>Current User</h3>
         <div id="userTable">
           <table>
             <tr>
@@ -46,7 +51,28 @@
         </div>
       </div>
     </div>
+    <!-- Login Row -->
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>Message Board</h1>
+      </div>
+    </div>
+    <div class="col-2">
 
+    </div>
+    <div class="col-8">
+      <table style="border: 1px, black, solid; width: 100%;">
+        <th>
+          <td>Image</td>
+          <td>Name</td>
+          <td>Message</td>
+        </th>
+      </table>
+    </div>
+    <div class="col-2">
+
+    </div>
+    <!-- messages row -->
   </div>
 </body>
 
