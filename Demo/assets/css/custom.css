@@ -1,0 +1,12 @@
+.insertMessageHere .messages{
+  border: black 1px solid;
+  height: 75px;
+}
+
+#messagePost{
+  width: 80%
+}
+
+#messageSubmit{
+  width: 15%
+}
