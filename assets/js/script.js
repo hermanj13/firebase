@@ -9,6 +9,7 @@ $(document).ready(function() {
   };
   firebase.initializeApp(config);
   var database = firebase.database();
+  $('.messages').hide()
 
   // Function to login to google
   function googleLogin() {
@@ -52,9 +53,9 @@ $(document).ready(function() {
       currentUser(user);
     };
   };
-  setTimeout(function(){
+  setTimeout(function() {
     loginCheck();
-  },500)
+  }, 500)
 
   // Function to populate the right panel or if it is run from the logout function it clears the name, email, and photo
   function currentUser(user) {
@@ -63,7 +64,7 @@ $(document).ready(function() {
       $('#googleLogin').hide();
       $('#googleLogout').show();
       // Displays the messages divs
-      $('.messages').show()
+      $('.messages').show();
       // Writes a welcome message to the user
       $('#welcomeGoesHere').text('Hello ' + user.displayName);
       // Populates the right side with display name, email, and image
@@ -82,9 +83,7 @@ $(document).ready(function() {
     firebase.auth().signOut();
     setTimeout(function() {
       // Hide the messages board from logout users
-      $('.messages').each(function(){
-        $(this).hide()
-      });
+      $('.messages').hide();
       // Welcome div gets cleared so no longer welcoming user
       $('#welcomeGoesHere').empty();
       // Login button gets shown
@@ -108,57 +107,83 @@ $(document).ready(function() {
 
   // Function to load messages and populates the message board div to display them
   var messagesLoad = function() {
+    // References the messageBoard database to grab the messages
     var databaseReference = database.ref('messageBoard').once('value').then(function(snapshot) {
-      if (snapshot.val()) {
-        $(`.insertMessageHere`).empty()
-        posts = snapshot.val();
+      // Setting the snapshot value to be equal to posts
+      if (posts = snapshot.val()) {
+        // Empty the insertMessageHere div so that it can be repopulated
+        $(`.insertMessageHere`).empty();
+        // Run a for loop on each object in your posts object
         for (var i = 0 in posts) {
+          // Runs the creat function to make the post on the page
           create(posts[i].message, posts[i].name, posts[i].date);
         };
       };
     });
+    // $('.messages').show()
   };
 
-  var create = function(message, name, date){
-    dates = dateMaker(date);
-    var newMessage = `<div class="col-2 message">${name}</div><div class="col-8 message">${message}</div><div class="col-2 message">${dates[0]}/${dates[1]}/${dates[2]} ${dates[3]}:${dates[4]} ${dates[5]}</div>`
-    $('.insertMessageHere').prepend(newMessage)
-  }
+  // Function to build the message and add it to the DOM
+  var create = function(message, name, date) {
+    // Sets the variable dates to the array returned from dateMaker
+    var dates = dateMaker(date);
+    // Creates a new div to display the date and time of the post in a specific format
+    var newMessage = `<div class="col-2 messages">${name}</div><div class="col-8 messages">${message}</div><div class="col-2 messages">${dates[0]}/${dates[1]}/${dates[2]} ${dates[3]}:${dates[4]} ${dates[5]}</div>`;
+    // Prepend the created div into the insertMessageHere div so that the order is from newest to oldest
+    $('.insertMessageHere').prepend(newMessage);
+  };
 
-  var dateMaker = function(date){
+  // Function taking in the date of post and return it in a different format
+  var dateMaker = function(date) {
+    // Creates a new date object based off the date of the post
     var dates = new Date(date);
+    // Set the month to be the month pulled from the date object
     var month = dates.getMonth();
+    // Set the day to be the month pulled from the date object
     var day = dates.getDate();
+    // Set the year to be the month pulled from the date object
+    // Subtracting 100 because dates in the 2000 start with 100
     var year = dates.getYear() - 100;
+    // Set the hours to be the month pulled from the date object
     var hours = dates.getHours();
+    // Set the minutes to be the month pulled from the date object
     var minutes = dates.getMinutes();
-    if(minutes<10){
+    // Check to see if the minutes is less then 10
+    // If it is adding a 0 string infront of the minutes
+    if (minutes < 10) {
       minutes = "0" + minutes;
     };
+    // Sets Time of day to AM by default
     var time = "AM";
-    if(hours === 0){
+    // Checks to see if the hours is above 12 or equal to 0
+    // hours are based on 24 hours time so to display it properly
+    // have to subtract the 12
+    if (hours === 0) {
       hours = 12;
-    }else if(hours === 12){
+    } else if (hours === 12) {
       time = "PM";
-    } else if(hours > 12){
+    } else if (hours > 12) {
       hours = hours - 12;
       time = "PM";
-    } else if(hours===0){
+    } else if (hours === 0) {
       hours = 12;
     };
-    return [month,day,year,hours,minutes,time]
-  }
+    // Return an array of all the values that can then
+    // be referenced in the create function
+    return [month, day, year, hours, minutes, time];
+  };
+
   // Automatically runs the messagesLoad function on page load as well as everytime an element is added
   var messagesDatabase = firebase.database().ref('messageBoard');
-    messagesDatabase.on('value', function(snapshot) {
-      messagesLoad();
+  messagesDatabase.on('value', function(snapshot) {
+    messagesLoad();
   });
 
   // Function that builds objects for new posts and add's them to the proper datebase
   var newPost = function() {
     // Creates a date element to attach to the message object
     var date = new Date;
-    today = date.toString();
+    var today = date.toString();
     // console.log(new Dateprints.getDay())
 
     // Grabs the user that has been logged in
@@ -195,9 +220,10 @@ $(document).ready(function() {
     messagesLoad();
   };
 
-  $(document).keyup(function(event){
-    if(event.which === 13){
-      newPost()
+  // On the enter key being pushed newPost function gets run
+  $(document).keyup(function(event) {
+    if (event.which === 13) {
+      newPost();
     }
   })
   // OnClick function on the submit button to run the newPost function
