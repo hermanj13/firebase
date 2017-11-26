@@ -9,7 +9,6 @@ $(document).ready(function() {
   };
   firebase.initializeApp(config);
   var database = firebase.database();
-  $('.messages').hide()
 
   // Function to login to google
   function googleLogin() {
@@ -33,6 +32,7 @@ $(document).ready(function() {
       currentUser(user);
       // Load messages as soon as user logs in
       messagesLoad();
+
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -64,7 +64,7 @@ $(document).ready(function() {
       $('#googleLogin').hide();
       $('#googleLogout').show();
       // Displays the messages divs
-      $('.messages').show();
+      $('#messageDislayArea').show();
       // Writes a welcome message to the user
       $('#welcomeGoesHere').text('Hello ' + user.displayName);
       // Populates the right side with display name, email, and image
@@ -83,7 +83,7 @@ $(document).ready(function() {
     firebase.auth().signOut();
     setTimeout(function() {
       // Hide the messages board from logout users
-      $('.messages').hide();
+      $('#messageDislayArea').hide();
       // Welcome div gets cleared so no longer welcoming user
       $('#welcomeGoesHere').empty();
       // Login button gets shown
@@ -120,7 +120,7 @@ $(document).ready(function() {
         };
       };
     });
-    // $('.messages').show()
+
   };
 
   // Function to build the message and add it to the DOM
@@ -216,8 +216,6 @@ $(document).ready(function() {
 
     // Empties the textarea
     var message = $('#messagePost').val("");
-    // Reruns the messagesLoad function so that the messageBoard gets repopulated
-    messagesLoad();
   };
 
   // On the enter key being pushed newPost function gets run
