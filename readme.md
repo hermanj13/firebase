@@ -4,14 +4,17 @@
 * Go to [Firebase Website](https://firebase.google.com/)
 * Click `Get Started`
 * Click `Add project`
+
 ![](./images/addAProject.png)
 ![](./images/namingProject.png)
 * In `Project name` enter [yourname]Testing
 * Firebase will randomly create a project ID
 * Click `Create Project`
 * You will now be taken to the console of your Firebase project
+
 ![](./images/console.png)
 * Click the `Add Firebase to your web app` button
+
 ![](./images/copyScreen.png)
 * Click the `copy` button
 * This code is what is going to allow your code to use Firebase
@@ -37,10 +40,13 @@ var config = {
 
 * For this demo we will be using Google Authentication
 * Click `Authentication` in the sidebar shown above
+
 ![](./images/clickMethods.png)
 * Click on the `SET UP SIGN-IN METHOD` button
+
 ![](./images/providers.png)
 * You will then see a list of possible sign in providers. We will be using Google so click on that.
+
 ![](./images/googleAuth.png)
 * Click on the toggle in the top right corner to enable Google authentication and click `SAVE`
 
