@@ -3,6 +3,10 @@
   height: 75px;
 }
 
+#messageDislayArea{
+  display: none;
+}
+
 #messagePost{
   width: 80%
 }
